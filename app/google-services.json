@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "591007204076",
+    "project_id": "appriuso-747cc",
+    "storage_bucket": "appriuso-747cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591007204076:android:5958fef64aec19c6845bc9",
+        "android_client_info": {
+          "package_name": "com.example.appriuso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591007204076-dr802ka5osobgd8bte2hk1bq6d9uva3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiKtDqPGrsBz9TPmvOHFdOKvB9zXVP2hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591007204076-dr802ka5osobgd8bte2hk1bq6d9uva3c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
