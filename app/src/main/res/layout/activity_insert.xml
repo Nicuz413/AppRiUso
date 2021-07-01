@@ -8,12 +8,12 @@
     android:padding="32dp"
     tools:context=".InsertActivity">
 
-    <TextView
-        android:id="@+id/textView6"
+    <EditText
+        android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:hint="@string/name_hint"/>
+        android:hint="@string/name_hint" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -24,11 +24,14 @@
         android:tooltipText="@string/take_picture_tooltip"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
-    <TextView
-        android:id="@+id/textViewInsert"
+    <EditText
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
         android:hint="@string/insert_hint"/>
 
     <com.google.android.gms.maps.MapView
@@ -36,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:tooltipText="@string/location_tooltip"/>
+        android:tooltipText="@string/location_tooltip" />
 
     <Button
         android:id="@+id/Insertbutton"
