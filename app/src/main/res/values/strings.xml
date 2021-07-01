@@ -4,7 +4,11 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">REGISTRATI</string>
     <string name="login_text">Benvenuto in RiUso</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_new">Regala</string>
+    <string name="action_logout">Esci</string>
     <string name="invalid_message">Campo vuoto</string>
+    <string name="take_picture_tooltip">Scatta una foto all\'oggetto che vuoi regalare</string>
+    <string name="insert_hint">Scrivi una breve descrizione dell\'oggetto</string>
+    <string name="location_tooltip">Inserisci il luogo dove avverrà il ritiro dell\'oggetto</string>
+    <string name="name_hint">Inserisci il nome dell\'oggetto</string>
 </resources>
