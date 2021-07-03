@@ -21,7 +21,7 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:onClick="takePicture"
         android:tooltipText="@string/take_picture_tooltip"
         app:layout_constraintBottom_toTopOf="@id/description"
@@ -34,27 +34,37 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/insert_hint"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@id/mapView"
+        app:layout_constraintBottom_toTopOf="@id/searchLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <SearchView
+        android:id="@+id/searchLocation"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:tooltipText="@string/location_tooltip"
-        app:layout_constraintBottom_toTopOf="@+id/insertButton"
+        app:layout_constraintBottom_toTopOf="@+id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        android:queryHint="@string/location_tooltip" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/insertButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchLocation"
+        tools:layout="@layout/support_simple_spinner_dropdown_item" />
 
     <Button
         android:id="@+id/insertButton"
@@ -62,8 +72,9 @@
         android:layout_height="wrap_content"
         android:onClick="sendItem"
         android:text="Inserisci"
-        app:layout_constraintTop_toBottomOf="@id/mapView"
+        app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
