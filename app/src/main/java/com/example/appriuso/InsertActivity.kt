@@ -12,12 +12,15 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,8 +33,11 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_insert.*
+import java.io.ByteArrayOutputStream
 
 class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
     private var googleMap: GoogleMap? = null
@@ -39,6 +45,7 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
 
     private lateinit var auth: FirebaseAuth
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var database: DatabaseReference
 
     private val defaultLocation = LatLng(45.829221758297436, 8.821894447020572)
     private var locationPermissionGranted = false
@@ -54,7 +61,7 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         }
         setContentView(R.layout.activity_insert)
         auth = Firebase.auth
-
+        database = Firebase.database("https://appriuso-747cc-default-rtdb.europe-west1.firebasedatabase.app/").reference
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -148,8 +155,18 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         }
     }
 
-    fun sendItem(view: View) {
-        var newItem = previousMarker?.let { Item(auth.uid, editName.text.toString(), description.text.toString(), imageView.id, it.position)}
+    fun createItem(view: View) {
+        val stream = ByteArrayOutputStream()
+        imageView.drawToBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val byteArray: ByteArray = stream.toByteArray()
+        val stringImage: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
+        var newItem = previousMarker?.let { Item(auth.uid, editName.text.toString(), description.text.toString(), stringImage, it.position)}
+        sendItem(newItem)
+    }
+
+    private fun sendItem(newItem: Item?) {
+        database.child("items").push().setValue(newItem)
+        Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT)
     }
 
     override fun onMapReady(mapHandle: GoogleMap?) {
@@ -160,11 +177,6 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     private fun getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
         if (ContextCompat.checkSelfPermission(this.applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {

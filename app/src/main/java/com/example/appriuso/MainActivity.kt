@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(toInsertActivity)
                 return true
             }
+            R.id.action_settings ->{
+                val sentItems = Intent(this,SentActivity::class.java)
+                startActivity(sentItems)
+                return true }
             R.id.action_logout ->{ auth.signOut()
                 val returnToLogin = Intent(this, LoginActivity::class.java)
                 startActivity(returnToLogin)
