@@ -3,7 +3,7 @@
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">REGISTRATI</string>
-    <string name="login_text">Benvenuto in RiUso</string>
+    <string name="login_text">RiUso</string>
     <string name="action_new">Regala</string>
     <string name="action_logout">Esci</string>
     <string name="invalid_message">Campo vuoto</string>
@@ -11,4 +11,5 @@
     <string name="insert_hint">Scrivi una breve descrizione dell\'oggetto</string>
     <string name="location_tooltip">Inserisci il luogo dove avverrà il ritiro dell\'oggetto</string>
     <string name="name_hint">Inserisci il nome dell\'oggetto</string>
+    <string name="slogan">Già usato?, RIusalo!!</string>
 </resources>

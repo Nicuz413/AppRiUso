@@ -42,7 +42,7 @@
         android:tooltipText="@string/location_tooltip" />
 
     <Button
-        android:id="@+id/Insertbutton"
+        android:id="@+id/insertButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
