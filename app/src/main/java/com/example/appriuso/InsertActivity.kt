@@ -89,12 +89,11 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
             .title("Luogo selezionato"))
     }
 
-    private fun getLocationFromAddress(context: Context, newText: String?) : LatLng? {
-        val coder: Geocoder = Geocoder(context)
-        var selectedLocation: LatLng? = null
+    private fun getLocationFromAddress(context: Context, newText: String?) : LatLng {
+        val coder = Geocoder(context)
+        val selectedLocation: LatLng?
 
-        var address: List<Address> = coder.getFromLocationName(newText, 5)
-        if(address == null) return null
+        val address: List<Address> = coder.getFromLocationName(newText, 5)
 
         val location: Address = address[0]
         selectedLocation = LatLng(location.latitude, location.longitude)
@@ -160,13 +159,14 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         imageView.drawToBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream)
         val byteArray: ByteArray = stream.toByteArray()
         val stringImage: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
-        var newItem = previousMarker?.let { Item(auth.uid, editName.text.toString(), description.text.toString(), stringImage, it.position)}
+        val newItem = previousMarker?.let { Item(auth.uid, editName.text.toString(), description.text.toString(), stringImage, it.position.latitude, it.position.longitude, spinner.selectedItem.toString())}
         sendItem(newItem)
     }
 
     private fun sendItem(newItem: Item?) {
         database.child("items").push().setValue(newItem)
-        Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun onMapReady(mapHandle: GoogleMap?) {
