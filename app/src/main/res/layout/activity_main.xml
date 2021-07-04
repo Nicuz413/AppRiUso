@@ -7,22 +7,34 @@
     tools:context=".MainActivity">
 
     <SearchView
-        android:id="@+id/SearchView"
+        android:id="@+id/searchItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainItemList"
+        app:layout_constraintEnd_toStartOf="@+id/mainSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView
-        android:id="@+id/listView"
+    <Spinner
+        android:id="@+id/mainSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/mainItemList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchItem"
+        app:layout_constraintTop_toTopOf="parent"
+        android:entries="@array/Categorie"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainItemList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SearchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchItem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

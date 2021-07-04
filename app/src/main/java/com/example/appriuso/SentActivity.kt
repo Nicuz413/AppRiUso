@@ -15,31 +15,31 @@ class SentActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
 
-    private lateinit var itemList: ArrayList<Item>
+    private lateinit var sentItemList: ArrayList<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sent)
         auth = Firebase.auth
         database = Firebase.database("https://appriuso-747cc-default-rtdb.europe-west1.firebasedatabase.app/").getReference("items")
-        itemList = ArrayList()
-        basicQueryValueListener()
+        sentItemList = ArrayList()
+        createList()
     }
 
-    private fun basicQueryValueListener() {
+    private fun createList() {
         val myUserId = auth.uid
 
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    val adapterStub = ItemsAdapter(itemList, this@SentActivity)
                     for (itemSnapshot in dataSnapshot.children) {
                         val item = itemSnapshot.getValue(Item::class.java)
                         if (item != null) {
                             if (item.getUserUID() == myUserId)
-                                itemList.add(item)
+                                sentItemList.add(item)
                         }
                     }
+                    val adapterStub = SentItemsAdapter(sentItemList, this@SentActivity)
                     sentItemsList.adapter = adapterStub
                 }
             }

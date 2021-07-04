@@ -13,14 +13,14 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.list_item.view.*
 
-
-class ItemsAdapter(val list :ArrayList<Item>, val context: Context) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class SentItemsAdapter(private val list :ArrayList<Item>, val context: Context) : RecyclerView.Adapter<SentItemsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         private lateinit var database: DatabaseReference
 
         fun bindItems(item: Item) {
+            itemView.sentItemEmail.text = item.getEmail()
             itemView.sentItemName.text = item.getItemName()
             itemView.sentItemLocation.text = item.getItemPositionAddress()
             itemView.sentItemType.text = item.getItemType()

@@ -162,7 +162,8 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         val byteArray: ByteArray = stream.toByteArray()
         val stringImage: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
         val itemKey = database.child("items").push().key
-        val newItem = Item(itemKey, auth.uid, editName.text.toString(), description.text.toString(), stringImage, previousLocation, spinner.selectedItem.toString())
+        val newItem = Item(itemKey, auth.uid,
+            auth.currentUser?.email, editName.text.toString(), description.text.toString(), stringImage, previousLocation, spinner.selectedItem.toString())
         sendItem(newItem)
     }
 
