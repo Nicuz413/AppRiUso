@@ -52,6 +52,7 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
 
     private var lastKnownLocation: Location? = null
     private var previousMarker: Marker? = null
+    private var previousLocation: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,7 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
 
         searchLocation.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+                previousLocation = query
                 refreshMap(getLocationFromAddress(this@InsertActivity, query))
                 return true
             }
@@ -159,12 +161,15 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         imageView.drawToBitmap().compress(Bitmap.CompressFormat.JPEG, 100, stream)
         val byteArray: ByteArray = stream.toByteArray()
         val stringImage: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
-        val newItem = previousMarker?.let { Item(auth.uid, editName.text.toString(), description.text.toString(), stringImage, it.position.latitude, it.position.longitude, spinner.selectedItem.toString())}
+        val itemKey = database.child("items").push().key
+        val newItem = Item(itemKey, auth.uid, editName.text.toString(), description.text.toString(), stringImage, previousLocation, spinner.selectedItem.toString())
         sendItem(newItem)
     }
 
     private fun sendItem(newItem: Item?) {
-        database.child("items").push().setValue(newItem)
+        if (newItem != null) {
+            newItem.getItemKey()?.let { database.child("items").child(it).setValue(newItem) }
+        }
         Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT).show()
         finish()
     }
@@ -195,7 +200,6 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
 
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     locationPermissionGranted = true
