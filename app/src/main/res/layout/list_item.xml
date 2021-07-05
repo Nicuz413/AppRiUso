@@ -34,22 +34,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/sentItemLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/sentItemName"
-            android:layout_marginVertical="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/sentItemImage"
-            android:autoLink="all|map"
-            android:text="Location" />
-
-        <TextView
             android:id="@+id/sentItemType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/sentItemLocation"
+            android:layout_below="@id/sentItemName"
             android:layout_marginStart="10dp"
+            android:layout_marginVertical="10dp"
             android:layout_toEndOf="@id/sentItemImage"
             android:text="Type" />
 
@@ -59,19 +49,26 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/sentItemType"
             android:layout_marginStart="10dp"
-            android:layout_marginVertical="10dp"
             android:layout_toEndOf="@id/sentItemImage"
             android:text="Email" />
 
         <TextView
-            android:id="@+id/sentItemDescription"
+            android:id="@+id/sentItemLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/sentItemEmail"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/sentItemImage"
+            android:text="Location" />
+        <TextView
+            android:id="@+id/sentItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sentItemLocation"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/sentItemImage"
             android:text="Description" />
-
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -53,6 +53,7 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
     private var lastKnownLocation: Location? = null
     private var previousMarker: Marker? = null
     private var previousLocation: String? = null
+    private var imageInserted: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,14 +104,16 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     fun takePicture(view: View) {
-        val items = arrayOf("Take Photo", "Choose from Library", "Cancel")
+        if(!imageInserted)
+            imageInserted = true
+        val items = arrayOf("Scatta una foto", "Scegli dalla galleria", "Cancella")
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Add Photo!")
+        builder.setTitle("Aggiungi foto!")
         builder.setItems(items) { dialog, item ->
             when(items[item]){
-                "Take Photo" -> cameraIntent()
-                "Choose from Library" -> galleryIntent()
-                "Cancel" -> dialog.dismiss()
+                "Scatta una foto" -> cameraIntent()
+                "Scegli dalla galleria" -> galleryIntent()
+                "Cancella" -> dialog.dismiss()
             }
         }
         builder.show()
@@ -168,11 +171,15 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     private fun sendItem(newItem: Item?) {
-        if (newItem != null) {
+        if(editName.text.isNullOrBlank() || !imageInserted)
+            Toast.makeText(this, "Nome o immagine non presenti", Toast.LENGTH_SHORT).show()
+        else if (newItem != null) {
             newItem.getItemKey()?.let { database.child("items").child(it).setValue(newItem) }
+            Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT).show()
+            val returnToMain = Intent(this, MainActivity::class.java)
+            startActivity(returnToMain)
+            finish()
         }
-        Toast.makeText(this, "Oggetto caricato correttamente", Toast.LENGTH_SHORT).show()
-        finish()
     }
 
     override fun onMapReady(mapHandle: GoogleMap?) {
@@ -268,6 +275,15 @@ class InsertActivity : AppCompatActivity(), OnMapReadyCallback{
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(isFinishing){
+            val returnToMain = Intent(this, MainActivity::class.java)
+            startActivity(returnToMain)
+            finish()
+        }
     }
 
     companion object {

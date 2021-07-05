@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         database = Firebase.database("https://appriuso-747cc-default-rtdb.europe-west1.firebasedatabase.app/").getReference("items")
         itemList = ArrayList()
-        createList()
         mainSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -69,17 +68,16 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            R.id.action_new -> {val toInsertActivity = Intent(this, InsertActivity::class.java)
-                startActivity(toInsertActivity)
-                return true
-            }
-            R.id.action_settings ->{
+            R.id.action_sent ->{
                 val sentItems = Intent(this,SentActivity::class.java)
                 startActivity(sentItems)
+                finish()
                 return true }
-            R.id.action_logout ->{ auth.signOut()
+            R.id.action_logout ->{
+                auth.signOut()
                 val returnToLogin = Intent(this, LoginActivity::class.java)
                 startActivity(returnToLogin)
+                finish()
                 return true }
             else -> super.onOptionsItemSelected(item)
         }
@@ -95,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                         val item = itemSnapshot.getValue(Item::class.java)
                         if (item != null) {
                             if (item.getUserUID() != myUserId)
-                                if(item.getItemType() == mainSpinner.selectedItem.toString())
+                                if(mainSpinner.selectedItem.toString() == "Tutto" || item.getItemType() == mainSpinner.selectedItem.toString())
                                         if(stringSearched.isNullOrBlank())
                                             itemList.add(item)
                                         else if(stringSearched?.let { item.getItemName().toString().contains(it, true)} == true)
@@ -110,5 +108,11 @@ class MainActivity : AppCompatActivity() {
                 Log.w("KotlinQueryError", "loadPost:onCancelled", error.toException())
             }
         })
+    }
+
+    fun addItem(view: View) {
+        val toInsertActivity = Intent(this, InsertActivity::class.java)
+        startActivity(toInsertActivity)
+        finish()
     }
 }

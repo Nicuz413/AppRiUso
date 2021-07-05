@@ -46,15 +46,15 @@ class SentItemsAdapter(private val list :ArrayList<Item>, val context: Context) 
         holder.bindItems(list[position])
 
         holder.itemView.setOnLongClickListener {
-            val items = arrayOf("Disattiva inserzione", "Cancel")
+            val items = arrayOf("Elimina inserzione", "Cancella")
             val builder: AlertDialog.Builder = AlertDialog.Builder(it.context)
             builder.setItems(items) { dialog, item ->
                 when(items[item]){
-                    "Disattiva inserzione" -> {
+                    "Elimina inserzione" -> {
                         holder.removedItem(list[position], list)
                         notifyDataSetChanged()
                     }
-                    "Cancel" -> dialog.dismiss()
+                    "Cancella" -> dialog.dismiss()
                 }
             }
             builder.show()

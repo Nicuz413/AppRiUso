@@ -1,5 +1,6 @@
 package com.example.appriuso
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -47,5 +48,13 @@ class SentActivity : AppCompatActivity() {
                 Log.w("KotlinQueryError", "loadPost:onCancelled", error.toException())
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(isFinishing) {
+            val returnToMain = Intent(this, MainActivity::class.java)
+            startActivity(returnToMain)
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.example.appriuso
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,12 @@ class MainItemsAdapter (private val list :ArrayList<Item>, val context: Context)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(list[position])
+
+        holder.itemView.setOnClickListener {
+            val toMapActivity = Intent(it.context, MapActivity::class.java)
+            toMapActivity.putExtra("address", list[position].getItemPositionAddress())
+            it.context.startActivity(toMapActivity)
+        }
     }
 
     override fun getItemCount(): Int {
